@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../prisma/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id           String        @id @default(cuid())
+  nome         String
+  email        String        @unique
+  criadoEm     DateTime      @default(now())
+  transacoes   Transacao[]
+  contas       Conta[]
+}
+
+model Conta {
+  id           String        @id @default(cuid())
+  nome         String
+  tipo         TipoConta
+  saldo        Float         @default(0)
+  usuarioId    String
+  usuario      Usuario       @relation(fields: [usuarioId], references: [id])
+  transacoes   Transacao[]
+  criadoEm     DateTime      @default(now())
+}
+
+model Categoria {
+  id           String        @id @default(cuid())
+  nome         String        @unique
+  cor          String        @default("#6366f1")
+  icone        String?
+  transacoes   Transacao[]
+}
+
+model Transacao {
+  id           String         @id @default(cuid())
+  titulo       String
+  valor        Float
+  tipo         TipoTransacao
+  data         DateTime       @default(now())
+  descricao    String?
+  usuarioId    String
+  contaId      String
+  categoriaId  String
+  usuario      Usuario        @relation(fields: [usuarioId], references: [id])
+  conta        Conta          @relation(fields: [contaId], references: [id])
+  categoria    Categoria      @relation(fields: [categoriaId], references: [id])
+  criadoEm     DateTime       @default(now())
+}
+
+enum TipoTransacao {
+  RECEITA
+  DESPESA
+}
+
+enum TipoConta {
+  CORRENTE
+  POUPANCA
+  INVESTIMENTO
+  CREDITO
+}
