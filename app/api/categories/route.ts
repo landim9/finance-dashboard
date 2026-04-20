@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  const categories = await prisma.category.findMany({
-    include: { _count: { select: { transactions: true } } },
+  const categorias = await prisma.categoria.findMany({
+    include: { _count: { select: { transacoes: true } } },
   });
-  return NextResponse.json(categories);
+  return NextResponse.json(categorias);
 }

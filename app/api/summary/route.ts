@@ -2,17 +2,17 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  const transactions = await prisma.transaction.findMany();
+  const transacoes = await prisma.transacao.findMany();
 
-  const totalIncome = transactions
-    .filter((t) => t.type === "INCOME")
-    .reduce((acc, t) => acc + t.amount, 0);
+  const totalReceitas = transacoes
+    .filter((t) => t.tipo === "RECEITA")
+    .reduce((acc, t) => acc + t.valor, 0);
 
-  const totalExpense = transactions
-    .filter((t) => t.type === "EXPENSE")
-    .reduce((acc, t) => acc + t.amount, 0);
+  const totalDespesas = transacoes
+    .filter((t) => t.tipo === "DESPESA")
+    .reduce((acc, t) => acc + t.valor, 0);
 
-  const balance = totalIncome - totalExpense;
+  const saldo = totalReceitas - totalDespesas;
 
-  return NextResponse.json({ totalIncome, totalExpense, balance });
+  return NextResponse.json({ totalReceitas, totalDespesas, saldo });
 }

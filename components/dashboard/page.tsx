@@ -4,26 +4,26 @@ import { TransactionTable } from "@/components/dashboard/TransactionTable";
 import { ExpenseChart } from "@/components/dashboard/ExpenseChart";
 
 async function getSummary() {
-  const transactions = await prisma.transaction.findMany();
-  const totalIncome = transactions
-    .filter((t) => t.type === "INCOME")
-    .reduce((acc, t) => acc + t.amount, 0);
-  const totalExpense = transactions
-    .filter((t) => t.type === "EXPENSE")
-    .reduce((acc, t) => acc + t.amount, 0);
-  return { totalIncome, totalExpense, balance: totalIncome - totalExpense };
+  const transacoes = await prisma.transacao.findMany();
+  const totalReceitas = transacoes
+    .filter((t) => t.tipo === "RECEITA")
+    .reduce((acc, t) => acc + t.valor, 0);
+  const totalDespesas = transacoes
+    .filter((t) => t.tipo === "DESPESA")
+    .reduce((acc, t) => acc + t.valor, 0);
+  return { totalReceitas, totalDespesas, saldo: totalReceitas - totalDespesas };
 }
 
 async function getRecentTransactions() {
-  return prisma.transaction.findMany({
+  return prisma.transacao.findMany({
     take: 8,
-    orderBy: { date: "desc" },
-    include: { category: true, account: true },
+    orderBy: { data: "desc" },
+    include: { categoria: true, conta: true },
   });
 }
 
 export default async function DashboardPage() {
-  const [summary, transactions] = await Promise.all([
+  const [resumo, transacoes] = await Promise.all([
     getSummary(),
     getRecentTransactions(),
   ]);
@@ -34,10 +34,14 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-bold text-zinc-800">Dashboard Financeiro</h1>
         <p className="text-zinc-500 text-sm">Visão geral das suas finanças</p>
       </div>
-      <SummaryCards {...summary} />
+      <SummaryCards
+        totalIncome={resumo.totalReceitas}
+        totalExpense={resumo.totalDespesas}
+        balance={resumo.saldo}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <ExpenseChart transactions={transactions} />
-        <TransactionTable transactions={transactions} />
+        <ExpenseChart transactions={transacoes} />
+        <TransactionTable transactions={transacoes} />
       </div>
     </div>
   );

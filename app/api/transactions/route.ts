@@ -6,34 +6,34 @@ export async function GET(req: NextRequest) {
   const take = parseInt(searchParams.get("limit") ?? "10");
   const skip = parseInt(searchParams.get("offset") ?? "0");
 
-  const transactions = await prisma.transaction.findMany({
+  const transacoes = await prisma.transacao.findMany({
     take,
     skip,
-    orderBy: { date: "desc" },
-    include: { category: true, account: true },
+    orderBy: { data: "desc" },
+    include: { categoria: true, conta: true },
   });
 
-  const total = await prisma.transaction.count();
+  const total = await prisma.transacao.count();
 
-  return NextResponse.json({ transactions, total });
+  return NextResponse.json({ transacoes, total });
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
-  const transaction = await prisma.transaction.create({
+  const transacao = await prisma.transacao.create({
     data: {
-      title: body.title,
-      amount: body.amount,
-      type: body.type,
-      date: new Date(body.date),
-      description: body.description,
-      userId: body.userId,
-      accountId: body.accountId,
-      categoryId: body.categoryId,
+      titulo: body.titulo,
+      valor: body.valor,
+      tipo: body.tipo,
+      data: new Date(body.data),
+      descricao: body.descricao,
+      usuarioId: body.usuarioId,
+      contaId: body.contaId,
+      categoriaId: body.categoriaId,
     },
-    include: { category: true, account: true },
+    include: { categoria: true, conta: true },
   });
 
-  return NextResponse.json(transaction, { status: 201 });
+  return NextResponse.json(transacao, { status: 201 });
 }
