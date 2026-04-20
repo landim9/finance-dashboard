@@ -46,10 +46,17 @@ export function ExpenseChart({ transactions }: ExpenseChartProps) {
             ))}
           </Pie>
           <Tooltip
-            formatter={(value: number) =>
-              new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value)
-            }
-          />
+  formatter={(value) => {
+    if (typeof value !== "number") return [String(value), ""];
+    return [
+      new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(value),
+      "",
+    ];
+  }}
+/>
           <Legend />
         </PieChart>
       </ResponsiveContainer>
