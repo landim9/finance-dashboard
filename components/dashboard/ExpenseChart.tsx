@@ -1,29 +1,29 @@
 "use client";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
-interface Transaction {
-  type: string;
-  amount: number;
-  category: { name: string; color: string };
+interface Transacao {
+  tipo: string;
+  valor: number;
+  categoria: { nome: string; cor: string };
 }
 
 interface ExpenseChartProps {
-  transactions: Transaction[];
+  transactions: Transacao[];
 }
 
 export function ExpenseChart({ transactions }: ExpenseChartProps) {
-  const expenses = transactions.filter((t) => t.type === "EXPENSE");
+  const despesas = transactions.filter((t) => t.tipo === "DESPESA");
 
-  const grouped = expenses.reduce((acc, t) => {
-    const key = t.category.name;
-    acc[key] = (acc[key] || 0) + t.amount;
+  const agrupado = despesas.reduce((acc, t) => {
+    const key = t.categoria.nome;
+    acc[key] = (acc[key] || 0) + t.valor;
     return acc;
   }, {} as Record<string, number>);
 
-  const data = Object.entries(grouped).map(([name, value]) => ({ name, value }));
+  const data = Object.entries(agrupado).map(([name, value]) => ({ name, value }));
 
-  const colors = expenses.reduce((acc, t) => {
-    acc[t.category.name] = t.category.color;
+  const cores = despesas.reduce((acc, t) => {
+    acc[t.categoria.nome] = t.categoria.cor;
     return acc;
   }, {} as Record<string, string>);
 
@@ -42,14 +42,12 @@ export function ExpenseChart({ transactions }: ExpenseChartProps) {
             dataKey="value"
           >
             {data.map((entry) => (
-              <Cell key={entry.name} fill={colors[entry.name] ?? "#6366f1"} />
+              <Cell key={entry.name} fill={cores[entry.name] ?? "#6366f1"} />
             ))}
           </Pie>
           <Tooltip
-            formatter={(value) =>
-              typeof value === "number"
-                ? new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value)
-                : value
+            formatter={(value: number) =>
+              new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value)
             }
           />
           <Legend />
