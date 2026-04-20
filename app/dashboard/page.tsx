@@ -3,6 +3,7 @@ import { SummaryCards } from "@/components/dashboard/SummaryCards";
 import { TransactionTable } from "@/components/dashboard/TransactionTable";
 import { ExpenseChart } from "@/components/dashboard/ExpenseChart";
 
+export const dynamic = "force-dynamic";
 async function getSummary() {
   const transacoes = await prisma.transacao.findMany();
   const totalReceitas = transacoes
