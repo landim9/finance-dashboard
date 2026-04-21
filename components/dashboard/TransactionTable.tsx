@@ -22,24 +22,56 @@ const formatDate = (date: Date) =>
 
 export function TransactionTable({ transactions }: TransactionTableProps) {
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm border border-zinc-100">
-      <h2 className="text-sm font-semibold text-zinc-700 mb-4">Transações Recentes</h2>
-      <div className="space-y-3">
-        {transactions.map((t) => (
-          <div key={t.id} className="flex items-center justify-between py-2 border-b border-zinc-50 last:border-0">
+    <div className="glass glow-hover rounded-2xl p-5 animate-fade-up delay-500">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-sm font-mono text-zinc-300 tracking-wide">
+          Transações Recentes
+        </h2>
+        <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-md border border-white/5">
+          {transactions.length} registros
+        </span>
+      </div>
+
+      <div className="space-y-1">
+        {transactions.map((t, i) => (
+          <div
+            key={t.id}
+            className="group flex items-center justify-between px-3 py-3 rounded-xl border border-transparent hover:bg-white/[0.03] hover:border-white/5 transition-all duration-150"
+            style={{ animationDelay: `${500 + i * 50}ms` }}
+          >
             <div className="flex items-center gap-3">
-              {t.tipo === "RECEITA" ? (
-                <ArrowUpCircle size={20} className="text-green-500 shrink-0" />
-              ) : (
-                <ArrowDownCircle size={20} className="text-red-500 shrink-0" />
-              )}
+              <div className={`p-1.5 rounded-lg ${t.tipo === "RECEITA" ? "bg-emerald-500/10" : "bg-red-500/10"}`}>
+                {t.tipo === "RECEITA" ? (
+                  <ArrowUpCircle size={16} className="text-emerald-400" />
+                ) : (
+                  <ArrowDownCircle size={16} className="text-red-400" />
+                )}
+              </div>
               <div>
-                <p className="text-sm font-medium text-zinc-800">{t.titulo}</p>
-                <p className="text-xs text-zinc-400">{t.categoria.nome} · {formatDate(t.data)}</p>
+                <p className="text-sm font-mono text-zinc-200 leading-tight">{t.titulo}</p>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className="text-[10px] font-mono px-1.5 py-0.5 rounded-md border"
+                    style={{
+                      color: t.categoria.cor,
+                      borderColor: `${t.categoria.cor}30`,
+                      backgroundColor: `${t.categoria.cor}10`,
+                    }}
+                  >
+                    {t.categoria.nome}
+                  </span>
+                  <span className="text-[10px] font-mono text-zinc-600">
+                    {formatDate(t.data)}
+                  </span>
+                </div>
               </div>
             </div>
-            <span className={`text-sm font-semibold ${t.tipo === "RECEITA" ? "text-green-600" : "text-red-600"}`}>
-              {t.tipo === "RECEITA" ? "+" : "-"}{formatCurrency(t.valor)}
+            <span
+              className={`text-sm font-mono font-semibold tabular-nums ${
+                t.tipo === "RECEITA" ? "text-emerald-400" : "text-red-400"
+              }`}
+            >
+              {t.tipo === "RECEITA" ? "+" : "−"}{formatCurrency(t.valor)}
             </span>
           </div>
         ))}
