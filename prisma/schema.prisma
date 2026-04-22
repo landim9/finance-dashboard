@@ -11,6 +11,7 @@ model Usuario {
   id           String        @id @default(cuid())
   nome         String
   email        String        @unique
+  senha        String        @db.Text
   criadoEm     DateTime      @default(now())
   transacoes   Transacao[]
   contas       Conta[]

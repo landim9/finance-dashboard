@@ -5,8 +5,8 @@ import { LayoutDashboard, ArrowLeftRight, Tags, Settings, TrendingUp } from "luc
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/transactions", label: "Transações", icon: ArrowLeftRight },
+  { href: "/login", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/transacoes", label: "Transações", icon: ArrowLeftRight },
   { href: "/dashboard/categories", label: "Categorias", icon: Tags },
   { href: "/dashboard/settings", label: "Configurações", icon: Settings },
 ];

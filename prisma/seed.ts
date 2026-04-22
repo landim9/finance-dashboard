@@ -6,8 +6,12 @@ import { TipoTransacao, TipoConta } from "./generated/prisma/enums";
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
+import bcrypt from "bcryptjs"
+
 async function main() {
   console.log("🌱 Iniciando seed...");
+
+  const senhaHash = await bcrypt.hash("123456", 10)
 
   // Usuário principal
   const usuario = await prisma.usuario.upsert({
@@ -16,6 +20,7 @@ async function main() {
     create: {
       nome: "Rafael David",
       email: "rafael@financeapp.com",
+      senha: senhaHash,
     },
   });
 
