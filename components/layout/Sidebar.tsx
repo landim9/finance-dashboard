@@ -1,14 +1,17 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, ArrowLeftRight, Tags, Settings, TrendingUp } from "lucide-react";
+import { LayoutDashboard, ArrowLeftRight, Tags, Settings, TrendingUp, UserRoundPlus, User, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { logout } from "@/app/actions/auth"
 
 const navItems = [
-  { href: "/login", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/transacoes", label: "Transações", icon: ArrowLeftRight },
   { href: "/dashboard/categories", label: "Categorias", icon: Tags },
   { href: "/dashboard/settings", label: "Configurações", icon: Settings },
+  { href: "/registro", label: "Registro", icon:UserRoundPlus },
+  { href: "/login", label: "Login", icon:User }
 ];
 
 export function Sidebar() {
@@ -60,6 +63,17 @@ export function Sidebar() {
 
       {/* Bottom */}
       <div className="mt-auto px-3 py-3 rounded-xl border border-white/5 bg-white/[0.02]">
+
+      {/* Botão Sair */}
+      <form action={logout}>
+        <button
+          type="submit"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-mono transition-all duration-200 text-zinc-500 hover:text-zinc-200 hover:bg-white/5 border border-transparent">
+          <LogOut size={16} className="text-zinc-600" />
+            Sair
+        </button>
+      </form>
+
         <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest mb-1">
           Status
         </p>
