@@ -11,7 +11,7 @@ interface ExpenseChartProps {
   transactions: Transacao[];
 }
 
-const PREMIUM_COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
+const PREMIUM_COLORS = ["#3dd9b4", "#85a8ff", "#ff9c53", "#d58aff", "#ff5f7a", "#5ad7ff"];
 
 export function ExpenseChart({ transactions }: ExpenseChartProps) {
   const despesas = transactions.filter((t) => t.tipo === "DESPESA");
@@ -25,12 +25,12 @@ export function ExpenseChart({ transactions }: ExpenseChartProps) {
   const data = Object.entries(agrupado).map(([name, value]) => ({ name, value }));
 
   return (
-    <div className="glass glow-hover rounded-2xl p-5 animate-fade-up delay-400">
+    <div className="glass edge-line glow-hover rounded-2xl p-5 animate-fade-up delay-400">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-sm font-mono text-zinc-300 tracking-wide">
+        <h2 className="text-sm font-mono text-slate-100 tracking-wide uppercase tracking-[0.18em]">
           Despesas por Categoria
         </h2>
-        <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-md border border-white/5">
+        <span className="text-[10px] font-mono text-slate-300/80 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-md border border-white/10">
           {data.length} categorias
         </span>
       </div>
@@ -61,13 +61,13 @@ export function ExpenseChart({ transactions }: ExpenseChartProps) {
           </Pie>
           <Tooltip
             contentStyle={{
-              background: "#0f0f1a",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "#101626",
+              border: "1px solid rgba(142,175,255,0.22)",
               borderRadius: "12px",
               fontFamily: "var(--font-mono)",
               fontSize: "12px",
-              color: "#e8e8f0",
-              boxShadow: "0 0 30px rgba(0,0,0,0.5)",
+              color: "#e8edf8",
+              boxShadow: "0 12px 30px rgba(2,6,23,0.4)",
             }}
             formatter={(value) => {
               if (typeof value !== "number") return [String(value), ""];
@@ -84,7 +84,7 @@ export function ExpenseChart({ transactions }: ExpenseChartProps) {
             iconType="circle"
             iconSize={8}
             formatter={(value) => (
-              <span style={{ color: "#a0a0b8", fontFamily: "var(--font-mono)", fontSize: "11px" }}>
+              <span style={{ color: "#b5bfd9", fontFamily: "var(--font-mono)", fontSize: "11px" }}>
                 {value}
               </span>
             )}

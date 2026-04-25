@@ -26,7 +26,10 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${instrumentSerif.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#080810] text-zinc-100">
+      <body className="min-h-full flex flex-col text-zinc-100">
+        <a href="#main-content" className="skip-link">
+          Pular para o conteudo
+        </a>
         {children}
       </body>
     </html>
