@@ -140,7 +140,7 @@ finance-dashboard/
 
 A aplicação está disponível em produção via Vercel:
 
-**[https://finance-dashboard-three-weld-69.vercel.app](https://finance-dashboard-three-weld-69.vercel.app)**
+**[https://finance-dashboard-swart-chi.vercel.app](https://finance-dashboard-swart-chi.vercel.app)**
 
 ---
 
