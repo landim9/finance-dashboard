@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 💰 Finance Dashboard
 
-First, run the development server:
+**Aplicação fullstack de gestão financeira pessoal com autenticação, controle de contas e visualização de dados.**
+
+[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://finance-dashboard-three-weld-69.vercel.app)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)](https://www.prisma.io/)
+
+[🔗 Demo ao vivo](https://finance-dashboard-three-weld-69.vercel.app) · [🐛 Reportar bug](https://github.com/landim9/finance-dashboard/issues) · [💡 Solicitar feature](https://github.com/landim9/finance-dashboard/issues)
+
+</div>
+
+---
+
+## 📋 Sobre o Projeto
+
+O Finance Dashboard é uma aplicação web fullstack que permite ao usuário gerenciar suas finanças pessoais de forma centralizada. O sistema oferece cadastro e autenticação de usuários, criação de contas (corrente, poupança, investimento, crédito), lançamento de transações com categorias e visualização dos dados em gráficos interativos.
+
+### ✨ Funcionalidades
+
+- 🔐 **Autenticação** — Cadastro e login com sessão protegida via NextAuth + JWT
+- 🏦 **Contas** — Criação de contas por tipo (corrente, poupança, investimento, crédito) com saldo atualizado
+- 💸 **Transações** — Registro de receitas e despesas com categoria, data e descrição
+- 📊 **Dashboard** — Gráficos de evolução financeira por período com Recharts
+- 🏷️ **Categorias** — Categorização personalizada com cor e ícone
+
+---
+
+## 🛠 Stack
+
+| Camada | Tecnologia |
+|--------|-----------|
+| Framework | Next.js 15 (App Router) |
+| Linguagem | TypeScript |
+| ORM | Prisma |
+| Banco de dados | PostgreSQL |
+| Autenticação | NextAuth.js + bcryptjs |
+| UI | Shadcn/UI + Radix UI |
+| Estilos | Tailwind CSS |
+| Gráficos | Recharts |
+| Containerização | Docker |
+| Deploy | Vercel |
+
+---
+
+## 🗄️ Modelo de Dados
+
+```
+Usuario
+  ├── Conta (corrente | poupança | investimento | crédito)
+  └── Transacao
+        ├── tipo: RECEITA | DESPESA
+        ├── Conta
+        └── Categoria
+```
+
+---
+
+## 🚀 Rodando Localmente
+
+### Pré-requisitos
+
+- Node.js 18+
+- PostgreSQL ou Docker
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/landim9/finance-dashboard.git
+cd finance-dashboard
+```
+
+### 2. Instale as dependências
+
+```bash
+npm install
+```
+
+### 3. Configure as variáveis de ambiente
+
+```bash
+cp .env.example .env
+```
+
+Edite o `.env` com suas credenciais:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/finance_db"
+NEXTAUTH_SECRET="sua-chave-secreta"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+### 4. Suba o banco com Docker (opcional)
+
+```bash
+docker-compose up -d
+```
+
+### 5. Execute as migrations e seed
+
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
+
+### 6. Inicie o servidor de desenvolvimento
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Estrutura de Pastas
 
-## Learn More
+```
+finance-dashboard/
+├── app/
+│   ├── dashboard/       # Página principal com gráficos
+│   ├── login/           # Autenticação
+│   ├── registro/        # Cadastro de usuário
+│   ├── home/            # Landing page
+│   └── api/             # Rotas de API (Next.js API Routes)
+├── components/          # Componentes reutilizáveis
+├── lib/                 # Utilitários e configurações
+├── prisma/
+│   ├── schema.prisma    # Modelo de dados
+│   └── seed.ts          # Dados de demonstração
+└── middleware.ts        # Proteção de rotas autenticadas
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+A aplicação está disponível em produção via Vercel:
 
-## Deploy on Vercel
+**[https://finance-dashboard-three-weld-69.vercel.app](https://finance-dashboard-three-weld-69.vercel.app)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👨‍💻 Autor
+
+**Rafael David**
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-rafaeldaviddev-blue?logo=linkedin)](https://www.linkedin.com/in/rafaeldaviddev)
+[![Portfolio](https://img.shields.io/badge/Portfolio-landim.vercel.app-black)](https://landim.vercel.app)
