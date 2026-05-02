@@ -21,9 +21,11 @@ model Conta {
   id           String        @id @default(cuid())
   nome         String
   tipo         TipoConta
+  banco        String?
+  cor          String?
   saldo        Float         @default(0)
   usuarioId    String
-  usuario      Usuario       @relation(fields: [usuarioId], references: [id])
+  usuario      Usuario       @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
   transacoes   Transacao[]
   criadoEm     DateTime      @default(now())
 }

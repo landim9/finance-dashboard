@@ -8,7 +8,7 @@ import { logout } from "@/app/actions/auth";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/transacoes", label: "Transações", icon: ArrowLeftRight },
-  { href: "/dashboard/categories", label: "Categorias", icon: Tags },
+  { href: "/dashboard/categorias", label: "Categorias", icon: Tags },
   { href: "/dashboard/settings", label: "Configurações", icon: Settings },
 ];
 

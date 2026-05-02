@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { pegarUsuarioId } from "@/lib/cookies";
 
 export async function GET() {
   const transacoes = await prisma.transacao.findMany();

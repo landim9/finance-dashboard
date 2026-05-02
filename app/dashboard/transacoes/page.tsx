@@ -1,4 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getUsuarioId } from "@/lib/sessions";
+import { NovaTransacaoModal } from "@/components/dashboard/NewTransaction";
+import { NovaConta } from "@/components/dashboard/NovaConta";
+
+const secret = new TextEncoder().encode(process.env.SESSION_SECRET!);
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -8,11 +15,22 @@ const currency = new Intl.NumberFormat("pt-BR", {
 const dateFormat = new Intl.DateTimeFormat("pt-BR");
 
 export default async function TransacoesPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("sessao")?.value;
+  if (!token) redirect("/login");
+
+  const usuarioId = await getUsuarioId();
   const transactions = await prisma.transacao.findMany({
+    where: { usuarioId },
     include: { categoria: true, conta: true },
     orderBy: { data: "desc" },
     take: 20,
   });
+
+  const [categorias, contas] = await Promise.all([
+    prisma.categoria.findMany({ orderBy: { nome: "asc" } }),
+    prisma.conta.findMany({ where: { usuarioId }, orderBy: { nome: "asc" } }),
+  ]);
 
   return (
     <main id="main-content" className="p-4 md:p-8 space-y-6 bg-grid">
@@ -25,6 +43,11 @@ export default async function TransacoesPage() {
           Historico completo das suas movimentacoes financeiras.
         </p>
       </section>
+
+      <div className="gap-5 flex flex-col md:flex-row">
+          <NovaConta />
+          <NovaTransacaoModal categorias={categorias} contas={contas} />
+      </div>
 
       <section className="glass edge-line rounded-2xl p-5">
         <div className="hidden md:grid grid-cols-5 gap-3 px-3 pb-2 text-[11px] uppercase tracking-wider text-slate-400 font-mono">

@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/prisma";
+import { getUsuarioId } from "@/lib/sessions";
+
 
 const currency = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -6,8 +8,11 @@ const currency = new Intl.NumberFormat("pt-BR", {
 });
 
 export default async function CategoriesPage() {
+  const usuarioId = await getUsuarioId();
+
+
   const categories = await prisma.categoria.findMany({
-    include: { transacoes: true },
+    include: { transacoes: { where: { usuarioId }} },
     orderBy: { nome: "asc" },
   });
 

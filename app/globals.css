@@ -207,3 +207,10 @@
     transform: none;
   }
 }
+
+select,
+select option {
+  background-color: #0b111e;
+  color: #f1f5f9;
+  color-scheme: dark;
+}
